@@ -13,7 +13,6 @@ const links = [
 
 const dashboardPath = {
   pasien: '/pasien/dashboard',
-  nakes: '/nakes/dashboard',
   'admin-rs': '/admin-rs/dashboard',
   'admin-apotek': '/admin-apotek/dashboard',
 }

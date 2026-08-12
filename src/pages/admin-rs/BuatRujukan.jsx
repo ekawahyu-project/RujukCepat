@@ -9,7 +9,7 @@ import { useApp } from '../../context/AppContext'
 import { hospitalStatus } from '../../data/hospitals'
 import { CONDITION_CATEGORIES } from '../../data/conditions'
 import { haversineKm } from '../../utils/helpers'
-import { nakesNav } from './nav'
+import { adminRsNav } from './nav'
 
 const MALANG_CENTER = { lat: -7.9666, lng: 112.6326 }
 const STEP_LABELS = ['Kondisi Pasien', 'Rekomendasi RS', 'Detail RS', 'Konfirmasi']
@@ -60,12 +60,12 @@ export default function BuatRujukan() {
         reasons: reasonsFor(selectedHospital),
       })
       setSubmitting(false)
-      navigate(`/nakes/riwayat/${id}`)
+      navigate(`/admin-rs/riwayat/${id}`)
     }, 600)
   }
 
   return (
-    <DashboardLayout nav={nakesNav} roleLabel="Portal Tenaga Kesehatan">
+    <DashboardLayout nav={adminRsNav} roleLabel="Portal Admin Rumah Sakit">
       <div className="mx-auto max-w-3xl">
         <h1 className="text-2xl font-semibold tracking-tight text-ink">Buat Rujukan</h1>
 

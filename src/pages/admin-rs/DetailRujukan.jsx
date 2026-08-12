@@ -5,8 +5,7 @@ import DashboardLayout from '../../components/DashboardLayout'
 import { EmptyState } from '../../components/Misc'
 import Button from '../../components/Button'
 import { useApp } from '../../context/AppContext'
-import { formatDateTime } from '../../utils/helpers'
-import { nakesNav } from './nav'
+import { adminRsNav } from './nav'
 
 export default function DetailRujukan() {
   const { id } = useParams()
@@ -15,16 +14,16 @@ export default function DetailRujukan() {
 
   if (!referral) {
     return (
-      <DashboardLayout nav={nakesNav} roleLabel="Portal Tenaga Kesehatan">
-        <EmptyState title="Rujukan tidak ditemukan" action={<Button to="/nakes/riwayat" size="sm">Kembali ke riwayat</Button>} />
+    <DashboardLayout nav={adminRsNav} roleLabel="Portal Admin Rumah Sakit">
+        <EmptyState title="Rujukan tidak ditemukan" action={<Button to="/admin-rs/riwayat" size="sm">Kembali ke riwayat</Button>} />
       </DashboardLayout>
     )
   }
 
   return (
-    <DashboardLayout nav={nakesNav} roleLabel="Portal Tenaga Kesehatan">
+    <DashboardLayout nav={adminRsNav} roleLabel="Portal Admin Rumah Sakit">
       <div className="mx-auto max-w-2xl">
-        <Link to="/nakes/riwayat" className="mb-4 inline-flex items-center gap-1 text-sm text-ink-soft hover:text-deep-dark"><ChevronLeft size={16} /> Kembali ke riwayat</Link>
+        <Link to="/admin-rs/riwayat" className="mb-4 inline-flex items-center gap-1 text-sm text-ink-soft hover:text-deep-dark"><ChevronLeft size={16} /> Kembali ke riwayat</Link>
 
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mb-6 flex items-center gap-3 rounded-xl bg-secondary p-5">
           <CheckCircle2 className="text-deep-dark" size={26} />

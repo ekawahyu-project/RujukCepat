@@ -9,13 +9,12 @@ import { useApp } from '../context/AppContext'
 
 const roles = [
   { key: 'pasien', label: 'Pasien', icon: User, redirect: '/pasien/dashboard' },
-  { key: 'nakes', label: 'Tenaga Kesehatan', icon: Stethoscope, redirect: '/nakes/dashboard' },
-  { key: 'admin-rs', label: 'Admin Rumah Sakit', icon: Building2, redirect: '/admin-rs/dashboard' },
+  { key: 'admin-rs', label: 'Admin RS / Fasilitas Penerima', icon: Building2, redirect: '/admin-rs/dashboard' },
   { key: 'admin-apotek', label: 'Admin Apotek', icon: PillBottle, redirect: '/admin-apotek/dashboard' },
 ]
 
 export default function Login() {
-  const [role, setRole] = useState('nakes')
+  const [role, setRole] = useState('admin-rs')
   const [name, setName] = useState('')
   const { login } = useApp()
   const navigate = useNavigate()

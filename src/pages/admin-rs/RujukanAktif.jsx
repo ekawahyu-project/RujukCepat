@@ -4,7 +4,7 @@ import Button from '../../components/Button'
 import { EmptyState } from '../../components/Misc'
 import { useApp } from '../../context/AppContext'
 import { formatDateTime } from '../../utils/helpers'
-import { nakesNav } from './nav'
+import { adminRsNav } from './nav'
 
 const STATUS_META = {
   menunggu_konfirmasi: { label: 'Menunggu Konfirmasi', icon: Clock, color: 'bg-amber-bg text-amber' },
@@ -19,7 +19,7 @@ export default function RujukanAktif() {
   const aktif = referrals.filter((r) => r.status !== 'selesai')
 
   return (
-    <DashboardLayout nav={nakesNav} roleLabel="Portal Tenaga Kesehatan">
+    <DashboardLayout nav={adminRsNav} roleLabel="Portal Admin Rumah Sakit">
       <div className="mb-6">
         <h1 className="text-2xl font-semibold tracking-tight text-ink">Rujukan Aktif</h1>
         <p className="mt-1 text-sm text-ink-soft">
@@ -32,7 +32,7 @@ export default function RujukanAktif() {
           icon={Activity}
           title="Tidak ada rujukan aktif"
           description="Semua rujukan sudah selesai, atau belum ada rujukan yang dibuat."
-          action={<Button to="/nakes/buat-rujukan" size="sm">Buat Rujukan</Button>}
+          action={<Button to="/admin-rs/buat-rujukan" size="sm">Buat Rujukan</Button>}
         />
       ) : (
         <div className="space-y-4">

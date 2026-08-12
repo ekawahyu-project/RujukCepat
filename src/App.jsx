@@ -11,21 +11,22 @@ import Login from './pages/Login'
 
 // Pasien
 import PasienDashboard from './pages/pasien/PasienDashboard'
+import CariLayanan from './pages/pasien/CariLayanan'
 import RujukanSaya from './pages/pasien/RujukanSaya'
 import LayananObat from './pages/pasien/LayananObat'
 import RiwayatLayanan from './pages/pasien/RiwayatLayanan'
-
-// Nakes
-import NakesDashboard from './pages/nakes/NakesDashboard'
-import BuatRujukan from './pages/nakes/BuatRujukan'
-import RujukanAktif from './pages/nakes/RujukanAktif'
-import RiwayatRujukan from './pages/nakes/RiwayatRujukan'
-import DetailRujukan from './pages/nakes/DetailRujukan'
+import Profil from './pages/pasien/Profil'
 
 // Admin Rumah Sakit
 import AdminRsDashboard from './pages/admin-rs/AdminRsDashboard'
+import BuatRujukan from './pages/admin-rs/BuatRujukan'
 import RujukanMasuk from './pages/admin-rs/RujukanMasuk'
+import RujukanAktif from './pages/admin-rs/RujukanAktif'
+import RujukanDiproses from './pages/admin-rs/RujukanDiproses'
+import RiwayatRujukan from './pages/admin-rs/RiwayatRujukan'
+import DetailRujukan from './pages/admin-rs/DetailRujukan'
 import Ketersediaan from './pages/admin-rs/Ketersediaan'
+import RekomendasiFasilitas from './pages/admin-rs/RekomendasiFasilitas'
 import JadwalDokter from './pages/admin-rs/JadwalDokter'
 import RiwayatUpdate from './pages/admin-rs/RiwayatUpdate'
 
@@ -52,23 +53,24 @@ export default function App() {
 
         {/* Pasien */}
         <Route path="/pasien/dashboard" element={<ProtectedRoute role="pasien"><PasienDashboard /></ProtectedRoute>} />
+        <Route path="/pasien/cari-layanan" element={<ProtectedRoute role="pasien"><CariLayanan /></ProtectedRoute>} />
         <Route path="/pasien/rujukan" element={<ProtectedRoute role="pasien"><RujukanSaya /></ProtectedRoute>} />
         <Route path="/pasien/obat" element={<ProtectedRoute role="pasien"><LayananObat /></ProtectedRoute>} />
         <Route path="/pasien/riwayat" element={<ProtectedRoute role="pasien"><RiwayatLayanan /></ProtectedRoute>} />
+        <Route path="/pasien/profil" element={<ProtectedRoute role="pasien"><Profil /></ProtectedRoute>} />
 
-        {/* Nakes */}
-        <Route path="/nakes/dashboard" element={<ProtectedRoute role="nakes"><NakesDashboard /></ProtectedRoute>} />
-        <Route path="/nakes/buat-rujukan" element={<ProtectedRoute role="nakes"><BuatRujukan /></ProtectedRoute>} />
-        <Route path="/nakes/rujukan-aktif" element={<ProtectedRoute role="nakes"><RujukanAktif /></ProtectedRoute>} />
-        <Route path="/nakes/riwayat" element={<ProtectedRoute role="nakes"><RiwayatRujukan /></ProtectedRoute>} />
-        <Route path="/nakes/riwayat/:id" element={<ProtectedRoute role="nakes"><DetailRujukan /></ProtectedRoute>} />
-
-        {/* Admin Rumah Sakit */}
+        {/* Admin Rumah Sakit / Fasilitas Penerima */}
         <Route path="/admin-rs/dashboard" element={<ProtectedRoute role="admin-rs"><AdminRsDashboard /></ProtectedRoute>} />
+        <Route path="/admin-rs/buat-rujukan" element={<ProtectedRoute role="admin-rs"><BuatRujukan /></ProtectedRoute>} />
         <Route path="/admin-rs/rujukan-masuk" element={<ProtectedRoute role="admin-rs"><RujukanMasuk /></ProtectedRoute>} />
+        <Route path="/admin-rs/rujukan-aktif" element={<ProtectedRoute role="admin-rs"><RujukanAktif /></ProtectedRoute>} />
+        <Route path="/admin-rs/rujukan-diproses" element={<ProtectedRoute role="admin-rs"><RujukanDiproses /></ProtectedRoute>} />
+        <Route path="/admin-rs/riwayat-rujukan" element={<ProtectedRoute role="admin-rs"><RiwayatRujukan /></ProtectedRoute>} />
+        <Route path="/admin-rs/riwayat/:id" element={<ProtectedRoute role="admin-rs"><DetailRujukan /></ProtectedRoute>} />
         <Route path="/admin-rs/ketersediaan" element={<ProtectedRoute role="admin-rs"><Ketersediaan /></ProtectedRoute>} />
+        <Route path="/admin-rs/rekomendasi" element={<ProtectedRoute role="admin-rs"><RekomendasiFasilitas /></ProtectedRoute>} />
         <Route path="/admin-rs/jadwal-dokter" element={<ProtectedRoute role="admin-rs"><JadwalDokter /></ProtectedRoute>} />
-        <Route path="/admin-rs/riwayat" element={<ProtectedRoute role="admin-rs"><RiwayatUpdate /></ProtectedRoute>} />
+        <Route path="/admin-rs/riwayat-update" element={<ProtectedRoute role="admin-rs"><RiwayatUpdate /></ProtectedRoute>} />
 
         {/* Admin Apotek */}
         <Route path="/admin-apotek/dashboard" element={<ProtectedRoute role="admin-apotek"><AdminApotekDashboard /></ProtectedRoute>} />
