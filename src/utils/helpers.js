@@ -30,9 +30,10 @@ export const STATUS_META = {
 }
 
 export const OBAT_STATUS_META = {
-  diproses: { label: 'Diproses', step: 0 },
-  siap: { label: 'Siap Diambil', step: 1 },
-  selesai: { label: 'Selesai', step: 2 },
+  menunggu: { label: 'Menunggu Diproses', step: 0, color: 'bg-surface-tint text-ink-soft' },
+  diproses: { label: 'Diproses', step: 1, color: 'bg-amber-bg text-amber' },
+  siap: { label: 'Siap Diambil', step: 2, color: 'bg-secondary text-deep-dark' },
+  selesai: { label: 'Selesai', step: 3, color: 'bg-surface-tint text-ink-faint' },
 }
 
 export function formatDateTime(iso) {

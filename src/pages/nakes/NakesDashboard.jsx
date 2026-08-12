@@ -1,4 +1,4 @@
-import { FilePlus2, ArrowRight, Building2 } from 'lucide-react'
+import { FilePlus2, ArrowRight, Building2, Clock, CheckCircle2 } from 'lucide-react'
 import DashboardLayout from '../../components/DashboardLayout'
 import Button from '../../components/Button'
 import { StatusBadge } from '../../components/StatusBadge'
@@ -8,11 +8,18 @@ import { hospitalStatus } from '../../data/hospitals'
 import { formatDateTime } from '../../utils/helpers'
 import { nakesNav } from './nav'
 
-const REFERRAL_STATUS_LABEL = { diajukan: 'Diajukan', diterima: 'Diterima', selesai: 'Selesai' }
+const REFERRAL_STATUS_META = {
+  menunggu_konfirmasi: { label: 'Menunggu Konfirmasi', color: 'bg-amber-bg text-amber' },
+  diterima: { label: 'Diterima', color: 'bg-secondary text-deep-dark' },
+  ditolak: { label: 'Ditolak', color: 'bg-red-bg text-red' },
+  selesai: { label: 'Selesai', color: 'bg-surface-tint text-ink-faint' },
+}
 
 export default function NakesDashboard() {
   const { user, referrals, hospitals } = useApp()
-  const active = referrals.filter((r) => r.status !== 'selesai')
+  const active = referrals.filter((r) => r.status !== 'selesai' && r.status !== 'ditolak')
+  const pending = referrals.filter((r) => r.status === 'menunggu_konfirmasi')
+  const accepted = referrals.filter((r) => r.status === 'diterima')
   const available = hospitals.filter((h) => hospitalStatus(h) === 'tersedia')
 
   return (
@@ -25,14 +32,25 @@ export default function NakesDashboard() {
         <Button to="/nakes/buat-rujukan" icon={FilePlus2}>Buat Rujukan</Button>
       </div>
 
-      <div className="mb-6 grid gap-4 sm:grid-cols-3">
+      {/* Stats */}
+      <div className="mb-6 grid gap-4 sm:grid-cols-4">
         <div className="rounded-xl border border-line p-5">
           <p className="text-xs text-ink-faint">Rujukan Aktif</p>
           <p className="mt-1 text-2xl font-semibold tnum text-ink">{active.length}</p>
         </div>
         <div className="rounded-xl border border-line p-5">
-          <p className="text-xs text-ink-faint">Total Rujukan Dibuat</p>
-          <p className="mt-1 text-2xl font-semibold tnum text-ink">{referrals.length}</p>
+          <div className="flex items-center gap-1.5">
+            <Clock size={12} className="text-amber" />
+            <p className="text-xs text-ink-faint">Menunggu Konfirmasi</p>
+          </div>
+          <p className="mt-1 text-2xl font-semibold tnum text-ink">{pending.length}</p>
+        </div>
+        <div className="rounded-xl border border-line p-5">
+          <div className="flex items-center gap-1.5">
+            <CheckCircle2 size={12} className="text-deep-dark" />
+            <p className="text-xs text-ink-faint">Diterima RS</p>
+          </div>
+          <p className="mt-1 text-2xl font-semibold tnum text-ink">{accepted.length}</p>
         </div>
         <div className="rounded-xl border border-line p-5">
           <p className="text-xs text-ink-faint">RS Berstatus Tersedia</p>
@@ -44,21 +62,26 @@ export default function NakesDashboard() {
         <section className="rounded-xl border border-line p-5 lg:col-span-2">
           <div className="mb-3 flex items-center justify-between">
             <h2 className="font-semibold text-ink">Rujukan Terbaru</h2>
-            <Button to="/nakes/riwayat" variant="ghost" size="sm" icon={ArrowRight} iconRight>Lihat semua</Button>
+            <Button to="/nakes/rujukan-aktif" variant="ghost" size="sm" icon={ArrowRight} iconRight>Lihat semua aktif</Button>
           </div>
           {referrals.length === 0 ? (
             <EmptyState icon={FilePlus2} title="Belum ada rujukan" description="Rujukan yang Anda buat akan muncul di sini." action={<Button to="/nakes/buat-rujukan" size="sm">Buat rujukan pertama</Button>} />
           ) : (
             <div className="divide-y divide-line">
-              {referrals.slice(0, 5).map((r) => (
-                <div key={r.id} className="flex items-center justify-between gap-3 py-3">
-                  <div className="min-w-0">
-                    <p className="truncate text-sm font-medium text-ink">{r.hospitalName}</p>
-                    <p className="tnum text-xs text-ink-faint">{r.id} · {formatDateTime(r.createdAt)}</p>
+              {referrals.slice(0, 5).map((r) => {
+                const meta = REFERRAL_STATUS_META[r.status] || REFERRAL_STATUS_META.menunggu_konfirmasi
+                return (
+                  <div key={r.id} className="flex items-center justify-between gap-3 py-3">
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-medium text-ink">{r.hospitalName}</p>
+                      <p className="tnum text-xs text-ink-faint">{r.id} · {formatDateTime(r.createdAt)}</p>
+                    </div>
+                    <span className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-medium ${meta.color}`}>
+                      {meta.label}
+                    </span>
                   </div>
-                  <span className="shrink-0 rounded-full bg-secondary px-2.5 py-1 text-xs font-medium text-deep-dark">{REFERRAL_STATUS_LABEL[r.status]}</span>
-                </div>
-              ))}
+                )
+              })}
             </div>
           )}
         </section>

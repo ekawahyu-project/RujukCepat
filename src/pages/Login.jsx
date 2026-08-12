@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Stethoscope, Building2, PillBottle, LogIn } from 'lucide-react'
+import { Stethoscope, Building2, PillBottle, LogIn, User } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import Button from '../components/Button'
@@ -8,6 +8,7 @@ import { PageWrap } from '../components/Misc'
 import { useApp } from '../context/AppContext'
 
 const roles = [
+  { key: 'pasien', label: 'Pasien', icon: User, redirect: '/pasien/dashboard' },
   { key: 'nakes', label: 'Tenaga Kesehatan', icon: Stethoscope, redirect: '/nakes/dashboard' },
   { key: 'admin-rs', label: 'Admin Rumah Sakit', icon: Building2, redirect: '/admin-rs/dashboard' },
   { key: 'admin-apotek', label: 'Admin Apotek', icon: PillBottle, redirect: '/admin-apotek/dashboard' },
@@ -35,7 +36,7 @@ export default function Login() {
           <p className="mt-1.5 text-sm text-ink-soft">Pilih peran Anda untuk mengakses dashboard terkait.</p>
         </div>
 
-        <div className="mb-6 grid grid-cols-3 gap-2">
+        <div className="mb-6 grid grid-cols-2 gap-2 sm:grid-cols-4">
           {roles.map((r) => (
             <button
               key={r.key}
@@ -70,7 +71,9 @@ export default function Login() {
               className="w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm outline-none placeholder:text-ink-faint focus:border-deep"
             />
           </div>
-          <Button type="submit" className="w-full" icon={LogIn}>Masuk sebagai {roles.find((r) => r.key === role).label}</Button>
+          <Button type="submit" className="w-full" icon={LogIn}>
+            Masuk sebagai {roles.find((r) => r.key === role).label}
+          </Button>
           <p className="text-center text-xs text-ink-faint">Mode demo — kredensial apa pun akan diterima.</p>
         </form>
       </PageWrap>

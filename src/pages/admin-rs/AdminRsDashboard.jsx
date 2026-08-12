@@ -1,4 +1,4 @@
-import { AlertTriangle, BedDouble, Siren, HeartPulse } from 'lucide-react'
+import { AlertTriangle, BedDouble, Siren, HeartPulse, Inbox } from 'lucide-react'
 import DashboardLayout from '../../components/DashboardLayout'
 import Button from '../../components/Button'
 import { FreshnessNote } from '../../components/StatusBadge'
@@ -8,10 +8,13 @@ import { isStale } from '../../utils/helpers'
 import { adminRsNav } from './nav'
 
 export default function AdminRsDashboard() {
-  const { hospitals, user } = useApp()
+  const { hospitals, user, referrals } = useApp()
   const hospital = hospitals[0]
   const beds = bedTotals(hospital)
   const stale = isStale(hospital.lastUpdated, 60)
+
+  const pendingReferrals = referrals.filter((r) => r.status === 'menunggu_konfirmasi').length
+  const acceptedReferrals = referrals.filter((r) => r.status === 'diterima').length
 
   return (
     <DashboardLayout nav={adminRsNav} roleLabel="Portal Admin Rumah Sakit">
@@ -27,6 +30,20 @@ export default function AdminRsDashboard() {
         </div>
       )}
 
+      {/* Rujukan Masuk Alert */}
+      {pendingReferrals > 0 && (
+        <div className="mb-6 flex items-center justify-between gap-3 rounded-lg border border-amber bg-amber-bg/50 px-4 py-3">
+          <div className="flex items-center gap-2.5 text-sm text-amber">
+            <Inbox size={16} />
+            <span className="font-medium">{pendingReferrals} rujukan menunggu konfirmasi Anda.</span>
+          </div>
+          <Button to="/admin-rs/rujukan-masuk" size="sm" variant="outline" className="border-amber text-amber hover:bg-amber-bg shrink-0">
+            Lihat
+          </Button>
+        </div>
+      )}
+
+      {/* Stats: Ketersediaan */}
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="rounded-xl border border-line p-5">
           <div className="mb-2 flex items-center gap-2 text-ink-faint"><BedDouble size={16} /><p className="text-xs">Total Kapasitas Rawat Inap</p></div>
@@ -39,6 +56,18 @@ export default function AdminRsDashboard() {
         <div className="rounded-xl border border-line p-5">
           <div className="mb-2 flex items-center gap-2 text-ink-faint"><HeartPulse size={16} /><p className="text-xs">Ketersediaan ICU</p></div>
           <p className="tnum text-2xl font-semibold text-ink">{hospital.icu.avail}<span className="text-base text-ink-faint">/{hospital.icu.total}</span></p>
+        </div>
+      </div>
+
+      {/* Stats: Rujukan */}
+      <div className="mt-4 grid gap-4 sm:grid-cols-2">
+        <div className="rounded-xl border border-line p-5">
+          <div className="mb-2 flex items-center gap-2 text-ink-faint"><Inbox size={16} /><p className="text-xs">Rujukan Menunggu Konfirmasi</p></div>
+          <p className="tnum text-2xl font-semibold text-ink">{pendingReferrals}</p>
+        </div>
+        <div className="rounded-xl border border-line p-5">
+          <div className="mb-2 flex items-center gap-2 text-ink-faint"><Inbox size={16} /><p className="text-xs">Rujukan Diterima</p></div>
+          <p className="tnum text-2xl font-semibold text-ink">{acceptedReferrals}</p>
         </div>
       </div>
 
